@@ -3,7 +3,6 @@
 
 
 
-
 import ma.emsi.benyassine.tp0.rtp1.service.JsonAdapterPourGemini;
 import ma.emsi.benyassine.tp0.rtp1.service.LlmInteraction;
 import jakarta.faces.application.FacesMessage;
@@ -166,7 +165,7 @@ public class Bb implements Serializable {
             this.roleSystemeChangeable = false;
         }
         if (this.conversation.isEmpty()) {
-            this.jsonAdapter.setRoleSysteme(this.roleSysteme);
+            this.jsonAdapter.setSystemRole(this.roleSysteme);
         }
 
         try {
