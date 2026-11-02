@@ -19,12 +19,12 @@
 
         <h:form id="form">
 
-            <p:outputLabel for="rolesysteme" value="RÃ´le de l'API : "/>
+            <p:outputLabel for="rolesysteme" value="RRôle de l'API: "/>
             <!-- La valeur choisie dans cette liste dÃ©roulante sera affectÃ©e
             Ã  la propriÃ©tÃ© systemRole du backing bean. Cette liste est figÃ©e (disabled)
             dÃ¨s qu'une requÃªte a Ã©tÃ© envoyÃ©e au serveur. -->
             <p:selectOneMenu id="rolesysteme" value="#{bb.roleSysteme}" editable="true"
-                             required="true" requiredMessage="Vous devez indiquer le rÃ´le de l'API"
+                             required="true" requiredMessage="Vous devez indiquer le role de l'API"
                              disabled="#{! bb.roleSystemeChangeable}">
                 <f:selectItems value="#{bb.rolesSysteme}"/>
             </p:selectOneMenu>
@@ -44,16 +44,16 @@
                         <h:panelGroup>
                             <h:outputText value="Question :"/>
                             <button type="button" onclick="copyToClipboard('question')">Copier question</button>
-                            <button type="button" onclick="toutEffacer()">Effacer question et rÃ©ponse</button>
+                            <button type="button" onclick="toutEffacer()">Effacer question et réponse</button>
                         </h:panelGroup>
                         <h:inputTextarea id="question" value="#{bb.question}" title="Question"
                                          cols="50" rows="5"/>
                         <h:commandButton value="Envoyer la question" action="#{bb.envoyer}"/>
                         <h:panelGroup>
-                            <h:outputText value="RÃ©ponse :"/>
-                            <button type="button" onclick="copyToClipboard('reponse')">Copier rÃ©ponse</button>
+                            <h:outputText value="Réponse :"/>
+                            <button type="button" onclick="copyToClipboard('reponse')">Copier réponse</button>
                         </h:panelGroup>
-                        <h:inputTextarea id="reponse" value="#{bb.reponse}" title="RÃ©ponse"
+                        <h:inputTextarea id="reponse" value="#{bb.reponse}" title="Réponse"
                                          cols="50" rows="15"/>
                         <p:outputPanel style="display:flex; align-items: center; gap: 10px">
                             <h:outputText value="Mode debug : "/>
@@ -66,16 +66,16 @@
 
                     <h:panelGrid id="paneldebug" columns="1" rendered="#{bb.debug}">
                         <h:panelGroup>
-                            <h:outputText value="JSON envoyÃ© dans la requÃªte :"/>
-                            <button type="button" onclick="copyToClipboard('jsonrequete')">Copier requÃªte JSON</button>
+                            <h:outputText value="JSON envoyÃ© dans la requete :"/>
+                            <button type="button" onclick="copyToClipboard('jsonrequete')">Copier requete JSON</button>
                         </h:panelGroup>
-                        <h:inputTextarea id="jsonrequete" value="#{bb.texteRequeteJson}" title="RequÃªte JSON"
+                        <h:inputTextarea id="jsonrequete" value="#{bb.texteRequeteJson}" title="Requete JSON"
                                          cols="50" rows="15" readonly="true"/>
                         <h:panelGroup>
-                            <h:outputText value="JSON retournÃ© dans la rÃ©ponse :"/>
-                            <button type="button" onclick="copyToClipboard('jsonreponse')">Copier rÃ©ponse JSON</button>
+                            <h:outputText value="JSON retournÃ© dans la réponse :"/>
+                            <button type="button" onclick="copyToClipboard('jsonreponse')">Copier réponse JSON</button>
                         </h:panelGroup>
-                        <h:inputTextarea id="jsonreponse" value="#{bb.texteReponseJson}" title="RÃ©ponse JSON"
+                        <h:inputTextarea id="jsonreponse" value="#{bb.texteReponseJson}" title="Réponse JSON"
                                          cols="50" rows="15" readonly="true"/>
                     </h:panelGrid>
 
@@ -86,7 +86,7 @@
                         <button type="button" onclick="copyToClipboard('conversation')">Copier conversation</button>
                     </h:panelGroup>
                     <h:inputTextarea id="conversation" rows="30" cols="50" readonly="true"
-                                     value="#{bb.conversation}" title="Conversation entiÃ¨re"/>
+                                     value="#{bb.conversation}" title="Conversation entière"/>
                 </h:panelGrid>
 
             </h:panelGrid>
