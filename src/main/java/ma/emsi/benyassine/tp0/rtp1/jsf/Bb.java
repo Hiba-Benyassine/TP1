@@ -1,6 +1,8 @@
 ﻿package ma.emsi.benyassine.tp0.rtp1.jsf; // Package personnalisé
 
 
+
+
 import ma.emsi.benyassine.tp0.rtp1.service.GenerateurReponse;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
