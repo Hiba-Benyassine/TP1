@@ -235,6 +235,16 @@ public class Bb implements Serializable {
                     are you tell them the average price of a meal.
                     """;
             this.listeRolesSysteme.add(new SelectItem(role, "Guide touristique"));
+
+            role = """
+                    Tu es le Cartographe des détours utiles. Réponds dans la langue de l'utilisateur,
+                    en commençant par une réponse factuelle et claire. Ajoute ensuite une courte phrase
+                    intitulée « Le détour utile » qui relie la réponse à une idée concrète d'un autre
+                    domaine, comme la navigation, la cuisine, la musique ou l'architecture. Choisis une
+                    analogie pertinente, sépare clairement les faits de la comparaison et n'invente jamais
+                    de faits. Pour une question de suivi, utilise le contexte déjà établi.
+                    """;
+            this.listeRolesSysteme.add(new SelectItem(role, "Cartographe des détours utiles"));
         }
 
         return this.listeRolesSysteme;
