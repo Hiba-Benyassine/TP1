@@ -3,7 +3,9 @@
 
 
 
-import ma.emsi.benyassine.tp0.rtp1.service.GenerateurReponse;
+
+import ma.emsi.benyassine.tp0.rtp1.service.JsonAdapterPourGemini;
+import ma.emsi.benyassine.tp0.rtp1.service.LlmInteraction;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.model.SelectItem;
@@ -13,6 +15,7 @@ import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,12 +56,15 @@ public class Bb implements Serializable {
      * La conversation depuis le dÃ©but.
      */
     private StringBuilder conversation = new StringBuilder();
+    private boolean debug;
+    private String texteRequeteJson;
+    private String texteReponseJson;
 
     /**
      * Service pour modifier la question et gÃ©nÃ©rer la rÃ©ponse.
      */
     @Inject
-    private GenerateurReponse generateurReponse;
+    private JsonAdapterPourGemini jsonAdapter;
 
     /**
      * Contexte JSF. UtilisÃ© pour qu'un message d'erreur s'affiche dans le formulaire.
@@ -105,6 +111,30 @@ public class Bb implements Serializable {
         this.reponse = reponse;
     }
 
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public String getTexteRequeteJson() {
+        return texteRequeteJson;
+    }
+
+    public void setTexteRequeteJson(String texteRequeteJson) {
+        this.texteRequeteJson = texteRequeteJson;
+    }
+
+    public String getTexteReponseJson() {
+        return texteReponseJson;
+    }
+
+    public void setTexteReponseJson(String texteReponseJson) {
+        this.texteReponseJson = texteReponseJson;
+    }
+
     public String getConversation() {
         return conversation.toString();
     }
@@ -135,7 +165,24 @@ public class Bb implements Serializable {
             // Fige la liste dÃ©roulante qui permet de choisir le rÃ´le systÃ¨me
             this.roleSystemeChangeable = false;
         }
-        this.reponse = this.generateurReponse.genererReponse(this.question, this.roleSysteme);
+        if (this.conversation.isEmpty()) {
+            this.jsonAdapter.setRoleSysteme(this.roleSysteme);
+        }
+
+        try {
+            LlmInteraction interaction = jsonAdapter.envoyerRequete(question);
+            this.reponse = interaction.reponseExtraite();
+            this.texteRequeteJson = interaction.questionJson();
+            this.texteReponseJson = interaction.reponseJson();
+        } catch (Exception e) {
+            this.reponse = "Erreur : " + e.getMessage();
+            FacesMessage message = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    "Problème de connexion avec l'API du LLM",
+                    "Problème de connexion avec l'API du LLM : " + e.getMessage()
+                            + "\n" + Arrays.toString(e.getStackTrace()));
+            facesContext.addMessage(null, message);
+        }
         
         // La conversation contient l'historique des questions-rÃ©ponses depuis le dÃ©but.
         afficherConversation();
