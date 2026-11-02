@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
@@ -11,34 +11,21 @@
 </h:head>
 <h:body>
     <f:view>
-
-
-
-        <!-- Les Ã©ventuels messages d'erreur non liÃ©s Ã  un champ particulier sont affichÃ©s ici en rouge -->
         <h:messages errorStyle="color: red" showDetail="true" showSummary="false" globalOnly="true"/>
 
         <h:form id="form">
-
-            <p:outputLabel for="rolesysteme" value="RRôle de l'API: "/>
-            <!-- La valeur choisie dans cette liste dÃ©roulante sera affectÃ©e
-            Ã  la propriÃ©tÃ© systemRole du backing bean. Cette liste est figÃ©e (disabled)
-            dÃ¨s qu'une requÃªte a Ã©tÃ© envoyÃ©e au serveur. -->
+            <p:outputLabel for="rolesysteme" value="Rôle de l'API : "/>
             <p:selectOneMenu id="rolesysteme" value="#{bb.roleSysteme}" editable="true"
-                             required="true" requiredMessage="Vous devez indiquer le role de l'API"
+                             required="true" requiredMessage="Vous devez indiquer le rôle de l'API"
                              disabled="#{! bb.roleSystemeChangeable}">
                 <f:selectItems value="#{bb.rolesSysteme}"/>
             </p:selectOneMenu>
-            <!-- Message d'erreur ici si l'utilisateur oublie d'indiquer un rÃ´le systÃ¨me. -->
-            <h:message for="rolesysteme" errorStyle="color: red" />
+            <h:message for="rolesysteme" errorStyle="color: red"/>
 
-            <!-- Si on veut commencer un nouveau chat avec, Ã©ventuellement, un autre rÃ´le. -->
             <h:outputText value="  "/>
-            <h:commandButton value="Nouveau chat" action="#{bb.nouveauChat}" />
+            <h:commandButton value="Nouveau chat" action="#{bb.nouveauChat}"/>
 
-            <!-- Les Ã©lÃ©ments de la page sont disposÃ©s en deux colonnes :
-            question et rÃ©ponse Ã  gauche et historique de la conversation Ã  droite. -->
             <h:panelGrid id="paneltotal" columns="2" columnClasses="topAligned,topAligned">
-
                 <h:panelGrid id="panelgauche" columns="1">
                     <h:panelGrid id="questionetreponse" columns="1">
                         <h:panelGroup>
@@ -58,28 +45,32 @@
                         <p:outputPanel style="display:flex; align-items: center; gap: 10px">
                             <h:outputText value="Mode debug : "/>
                             <p:toggleSwitch id="debugSwitch" value="#{bb.debug}" styleClass="mb-2"
-                                            label="Mode debug"/>
+                                            label="Mode debug">
+                                <p:ajax event="change" update="debugContainer"/>
+                            </p:toggleSwitch>
                             <p:tooltip for="debugSwitch"
-                                       value="Active ou non l'affichage du JSON sur les requÃªtes et rÃ©ponses du LLM." />
+                                       value="Active ou non l'affichage du JSON sur les requêtes et réponses du LLM."/>
                         </p:outputPanel>
                     </h:panelGrid>
 
-                    <h:panelGrid id="paneldebug" columns="1" rendered="#{bb.debug}">
-                        <h:panelGroup>
-                            <h:outputText value="JSON envoyÃ© dans la requete :"/>
-                            <button type="button" onclick="copyToClipboard('jsonrequete')">Copier requete JSON</button>
-                        </h:panelGroup>
-                        <h:inputTextarea id="jsonrequete" value="#{bb.texteRequeteJson}" title="Requete JSON"
-                                         cols="50" rows="15" readonly="true"/>
-                        <h:panelGroup>
-                            <h:outputText value="JSON retournÃ© dans la réponse :"/>
-                            <button type="button" onclick="copyToClipboard('jsonreponse')">Copier réponse JSON</button>
-                        </h:panelGroup>
-                        <h:inputTextarea id="jsonreponse" value="#{bb.texteReponseJson}" title="Réponse JSON"
-                                         cols="50" rows="15" readonly="true"/>
-                    </h:panelGrid>
-
+                    <p:outputPanel id="debugContainer">
+                        <h:panelGrid id="paneldebug" columns="1" rendered="#{bb.debug}">
+                            <h:panelGroup>
+                                <h:outputText value="JSON envoyé dans la requête :"/>
+                                <button type="button" onclick="copyToClipboard('jsonrequete')">Copier requête JSON</button>
+                            </h:panelGroup>
+                            <h:inputTextarea id="jsonrequete" value="#{bb.texteRequeteJson}" title="Requête JSON"
+                                             cols="50" rows="15" readonly="true"/>
+                            <h:panelGroup>
+                                <h:outputText value="JSON retourné dans la réponse :"/>
+                                <button type="button" onclick="copyToClipboard('jsonreponse')">Copier réponse JSON</button>
+                            </h:panelGroup>
+                            <h:inputTextarea id="jsonreponse" value="#{bb.texteReponseJson}" title="Réponse JSON"
+                                             cols="50" rows="15" readonly="true"/>
+                        </h:panelGrid>
+                    </p:outputPanel>
                 </h:panelGrid>
+
                 <h:panelGrid id="paneldroit" columns="1" style="vertical-align: top;">
                     <h:panelGroup>
                         <h:outputText value="Conversation :"/>
@@ -88,7 +79,6 @@
                     <h:inputTextarea id="conversation" rows="30" cols="50" readonly="true"
                                      value="#{bb.conversation}" title="Conversation entière"/>
                 </h:panelGrid>
-
             </h:panelGrid>
         </h:form>
     </f:view>
