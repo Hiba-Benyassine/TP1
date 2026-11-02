@@ -1,4 +1,4 @@
-﻿package ma.emsi.benyassine.tp0.rtp1.jsf; // Package personnalisé
+package ma.emsi.benyassine.tp0.rtp1.jsf; // Package personnalisé
 
 
 

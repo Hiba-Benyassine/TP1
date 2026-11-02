@@ -13,6 +13,7 @@
     <f:view>
 
 
+
         <!-- Les Ã©ventuels messages d'erreur non liÃ©s Ã  un champ particulier sont affichÃ©s ici en rouge -->
         <h:messages errorStyle="color: red" showDetail="true" showSummary="false" globalOnly="true"/>
 
@@ -54,6 +55,28 @@
                         </h:panelGroup>
                         <h:inputTextarea id="reponse" value="#{bb.reponse}" title="RÃ©ponse"
                                          cols="50" rows="15"/>
+                        <p:outputPanel style="display:flex; align-items: center; gap: 10px">
+                            <h:outputText value="Mode debug : "/>
+                            <p:toggleSwitch id="debugSwitch" value="#{bb.debug}" styleClass="mb-2"
+                                            label="Mode debug"/>
+                            <p:tooltip for="debugSwitch"
+                                       value="Active ou non l'affichage du JSON sur les requÃªtes et rÃ©ponses du LLM." />
+                        </p:outputPanel>
+                    </h:panelGrid>
+
+                    <h:panelGrid id="paneldebug" columns="1" rendered="#{bb.debug}">
+                        <h:panelGroup>
+                            <h:outputText value="JSON envoyÃ© dans la requÃªte :"/>
+                            <button type="button" onclick="copyToClipboard('jsonrequete')">Copier requÃªte JSON</button>
+                        </h:panelGroup>
+                        <h:inputTextarea id="jsonrequete" value="#{bb.texteRequeteJson}" title="RequÃªte JSON"
+                                         cols="50" rows="15" readonly="true"/>
+                        <h:panelGroup>
+                            <h:outputText value="JSON retournÃ© dans la rÃ©ponse :"/>
+                            <button type="button" onclick="copyToClipboard('jsonreponse')">Copier rÃ©ponse JSON</button>
+                        </h:panelGroup>
+                        <h:inputTextarea id="jsonreponse" value="#{bb.texteReponseJson}" title="RÃ©ponse JSON"
+                                         cols="50" rows="15" readonly="true"/>
                     </h:panelGrid>
 
                 </h:panelGrid>
